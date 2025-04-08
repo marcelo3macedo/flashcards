@@ -1,0 +1,167 @@
+{
+    "info": {
+      "name": "Flashcards API",
+      "_postman_id": "e22e7f5a-2025-4e83-b9e3-1d9f9e6506b0",
+      "description": "Postman collection for Flashcards app API",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+      {
+        "name": "Users",
+        "item": [
+          {
+            "name": "Get all users",
+            "request": {
+              "method": "GET",
+              "url": "{{baseUrl}}/api/users"
+            }
+          },
+          {
+            "name": "Create user",
+            "request": {
+              "method": "POST",
+              "url": "{{baseUrl}}/api/users",
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"externalId\": \"auth0|xyz123\",\n  \"name\": \"John Doe\"\n}",
+                "options": { "raw": { "language": "json" } }
+              }
+            }
+          },
+          {
+            "name": "Get user by ID",
+            "request": {
+              "method": "GET",
+              "url": "{{baseUrl}}/api/users/1"
+            }
+          },
+          {
+            "name": "Update user",
+            "request": {
+              "method": "PUT",
+              "url": "{{baseUrl}}/api/users/1",
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"name\": \"Jane Doe\"\n}",
+                "options": { "raw": { "language": "json" } }
+              }
+            }
+          },
+          {
+            "name": "Delete user",
+            "request": {
+              "method": "DELETE",
+              "url": "{{baseUrl}}/api/users/1"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Categories",
+        "item": [
+          {
+            "name": "Get all categories",
+            "request": {
+              "method": "GET",
+              "url": "{{baseUrl}}/api/categories"
+            }
+          },
+          {
+            "name": "Create category",
+            "request": {
+              "method": "POST",
+              "url": "{{baseUrl}}/api/categories",
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"name\": \"Math\",\n  \"description\": \"Mathematics topics\"\n}",
+                "options": { "raw": { "language": "json" } }
+              }
+            }
+          },
+          {
+            "name": "Get category by ID",
+            "request": {
+              "method": "GET",
+              "url": "{{baseUrl}}/api/categories/1"
+            }
+          },
+          {
+            "name": "Update category",
+            "request": {
+              "method": "PUT",
+              "url": "{{baseUrl}}/api/categories/1",
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"name\": \"Science\",\n  \"description\": \"Updated description\"\n}",
+                "options": { "raw": { "language": "json" } }
+              }
+            }
+          },
+          {
+            "name": "Delete category",
+            "request": {
+              "method": "DELETE",
+              "url": "{{baseUrl}}/api/categories/1"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Notebooks",
+        "item": [
+          {
+            "name": "Get all notebooks",
+            "request": {
+              "method": "GET",
+              "url": "{{baseUrl}}/api/notebooks"
+            }
+          },
+          {
+            "name": "Create notebook",
+            "request": {
+              "method": "POST",
+              "url": "{{baseUrl}}/api/notebooks",
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"title\": \"Algebra Basics\",\n  \"description\": \"Introductory algebra notes\",\n  \"categoryId\": 1\n}",
+                "options": { "raw": { "language": "json" } }
+              }
+            }
+          },
+          {
+            "name": "Get notebook by ID",
+            "request": {
+              "method": "GET",
+              "url": "{{baseUrl}}/api/notebooks/1"
+            }
+          },
+          {
+            "name": "Update notebook",
+            "request": {
+              "method": "PUT",
+              "url": "{{baseUrl}}/api/notebooks/1",
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"title\": \"Updated Notebook Title\",\n  \"description\": \"Updated description\"\n}",
+                "options": { "raw": { "language": "json" } }
+              }
+            }
+          },
+          {
+            "name": "Delete notebook",
+            "request": {
+              "method": "DELETE",
+              "url": "{{baseUrl}}/api/notebooks/1"
+            }
+          }
+        ]
+      }
+    ],
+    "variable": [
+      {
+        "key": "baseUrl",
+        "value": "http://localhost:3000"
+      }
+    ]
+  }
+  
