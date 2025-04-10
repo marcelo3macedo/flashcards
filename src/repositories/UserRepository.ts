@@ -1,6 +1,6 @@
 import { User } from '../models/User';
 import { BaseRepository } from './BaseRepository';
-import { Pool } from 'mysql2/promise';
+import { Pool, ResultSetHeader } from 'mysql2/promise';
 
 export class UserRepository extends BaseRepository<User> {
   constructor(pool: Pool) {
@@ -23,23 +23,31 @@ export class UserRepository extends BaseRepository<User> {
   }
 
   async create(data: Partial<User>): Promise<number> {
-    const [result]: any = await this.pool.query(
+    const [result] = await this.pool.query<ResultSetHeader>(
       'INSERT INTO users (external_id, name, created_at, updated_at) VALUES (?, ?, NOW(), NOW())',
-      [data.externalId, data.name || null]
+      [data.externalId, data.name || null],
     );
     return result.insertId;
   }
 
   async update(id: number, data: Partial<User>): Promise<boolean> {
-    const [result]: any = await this.pool.query(
+    const [result] = await this.pool.query<ResultSetHeader>(
       'UPDATE users SET name = ?, updated_at = NOW() WHERE id = ?',
-      [data.name || null, id]
+      [data.name || null, id],
     );
     return result.affectedRows > 0;
   }
 
   async delete(id: number): Promise<boolean> {
-    const [result]: any = await this.pool.query('DELETE FROM users WHERE id = ?', [id]);
+    const [result] = await this.pool.query<ResultSetHeader>('DELETE FROM users WHERE id = ?', [id]);
     return result.affectedRows > 0;
+  }
+
+  async findByName(name: string) {
+    const [result] = await this.pool.query(
+      `SELECT * FROM users WHERE name LIKE CONCAT('%', ?, '%')`,
+      [name],
+    );
+    return result;
   }
 }
