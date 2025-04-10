@@ -42,14 +42,14 @@ export class CardRepository extends BaseRepository<Card> {
     return result.affectedRows > 0;
   }
 
-  async getLowestPriority(limit: number) {
+  async getLowestPriority(limit: number): Promise<Card[] | null> {
     const [result] = await this.pool.query(
       `SELECT id, front, back FROM cards
          ORDER BY priority ASC
          LIMIT ?`,
       [limit],
     );
-    return result;
+    return (result as Card[]) || null;
   }
 
   async updatePriority(cardId: number, increment: number) {
