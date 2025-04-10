@@ -1,0 +1,383 @@
+{
+  "name": "[Flashcards] Users",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -240,
+        -220
+      ],
+      "id": "0c0802a4-c1a0-47b9-ab90-4693f3b7ef05",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "content": "### User\nCRUD actions for users",
+        "height": 700,
+        "width": 1100,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -300,
+        -480
+      ],
+      "typeVersion": 1,
+      "id": "b79646a0-3892-40e4-8cfb-922f83f3e217",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "name"
+            },
+            {
+              "name": "externalId"
+            },
+            {
+              "name": "action"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -240,
+        0
+      ],
+      "id": "ca162054-b0af-4435-a707-5288b0718489",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e0164610-7ddf-4c0b-9e0f-d437ead674a1",
+              "name": "name",
+              "value": "Marcelo",
+              "type": "string"
+            },
+            {
+              "id": "b014e77f-27bb-4895-9245-5e42412ab288",
+              "name": "externalId",
+              "value": "2",
+              "type": "string"
+            },
+            {
+              "id": "634e548f-9f81-4173-894a-a606f2b2411f",
+              "name": "action",
+              "value": "create",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -60,
+        -220
+      ],
+      "id": "3803e077-e34c-4ee6-8ff2-f891905754a1",
+      "name": "example_create"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.action }}",
+                    "rightValue": "create",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "e2b6f61c-31a3-495d-bd38-f12af5afb4c8"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "a0d4a895-9bae-4177-8595-e7204e025de3",
+                    "leftValue": "={{ $json.action }}",
+                    "rightValue": "filter",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        140,
+        -120
+      ],
+      "id": "83ffca06-505b-44b9-b3aa-f54ca7d2235c",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "rmli9qpDoZXkvYAg",
+          "mode": "list",
+          "cachedResultName": "[Flashcards] Request"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "path": "users",
+            "method": "POST",
+            "data": "={\n  \"externalId\": \"{{ $json.externalId }}\",\n  \"name\": \"{{ $json.name }}\"\n}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "path",
+              "displayName": "path",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "method",
+              "displayName": "method",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "data",
+              "displayName": "data",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        400,
+        -260
+      ],
+      "id": "b7f062be-98fb-489f-a936-257086104b83",
+      "name": "create_user"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "rmli9qpDoZXkvYAg",
+          "mode": "list",
+          "cachedResultName": "[Flashcards] Request"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "path": "=users?name={{ $json.name }}",
+            "method": "GET"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "path",
+              "displayName": "path",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "method",
+              "displayName": "method",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "data",
+              "displayName": "data",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        400,
+        -60
+      ],
+      "id": "96463a71-d607-49e3-8eb1-9e52556bd494",
+      "name": "get_user"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e0164610-7ddf-4c0b-9e0f-d437ead674a1",
+              "name": "name",
+              "value": "Marcelo",
+              "type": "string"
+            },
+            {
+              "id": "634e548f-9f81-4173-894a-a606f2b2411f",
+              "name": "action",
+              "value": "filter",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -60,
+        -380
+      ],
+      "id": "eccd2734-fa07-4b48-af31-9392fb61c34c",
+      "name": "example_filter"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "example_filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "example_create": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "create_user",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "get_user",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "example_filter": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "e8b7a74b-bbb2-4e18-a9b5-859b5652b266",
+  "meta": {
+    "instanceId": "ce43f8e9d83fa55957f8a418a0867c61676143d6fb4473fe26538c46ef0042bd"
+  },
+  "id": "kxnPU4cfXneI0t9a",
+  "tags": [
+    {
+      "createdAt": "2025-04-10T13:14:52.178Z",
+      "updatedAt": "2025-04-10T13:14:52.178Z",
+      "id": "HC51OalwgX4DEzEL",
+      "name": "memorizou"
+    }
+  ]
+}

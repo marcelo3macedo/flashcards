@@ -138,8 +138,7 @@ Finish a session with `sessionId` and `responses`
 
 ## 📌 License
 
-MIT © 2025  
-Made with ❤️ by your dev team.
+MIT © 2025
 
 ```
 

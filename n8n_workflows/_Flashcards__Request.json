@@ -1,0 +1,298 @@
+{
+  "name": "[Flashcards] Request",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -240,
+        -220
+      ],
+      "id": "2667dd25-88c8-4306-b92d-587806ceecde",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "content": "### Request\nMake request to memorizou app",
+        "height": 540,
+        "width": 1100,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -300,
+        -320
+      ],
+      "typeVersion": 1,
+      "id": "a9755b46-fcb0-4f46-ab9f-ec4f84fb7051",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "be3181be-0fe2-42be-bedd-3d32ddced110",
+              "name": "endpoint",
+              "value": "http://host.docker.internal:3000/api",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        120,
+        -80
+      ],
+      "id": "000a8cef-cc30-4379-9281-091dd2168317",
+      "name": "global"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.endpoint }}/{{ $json.path }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        560,
+        -200
+      ],
+      "id": "7fe6ad9c-96e4-4cef-b765-bc1161f35f5c",
+      "name": "get_request"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "09ca7a32-fc6c-4030-ae2d-6ec19ecbc0df",
+              "leftValue": "={{ $json.method }}",
+              "rightValue": "GET",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        320,
+        -80
+      ],
+      "id": "fb089cfc-ba21-4da9-b070-de689f241efe",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e0164610-7ddf-4c0b-9e0f-d437ead674a1",
+              "name": "path",
+              "value": "users",
+              "type": "string"
+            },
+            {
+              "id": "b014e77f-27bb-4895-9245-5e42412ab288",
+              "name": "method",
+              "value": "GET",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        120,
+        -260
+      ],
+      "id": "454f0954-1e30-4cec-8450-a2c858e7c6f3",
+      "name": "example_get"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e0164610-7ddf-4c0b-9e0f-d437ead674a1",
+              "name": "path",
+              "value": "users",
+              "type": "string"
+            },
+            {
+              "id": "b014e77f-27bb-4895-9245-5e42412ab288",
+              "name": "method",
+              "value": "POST",
+              "type": "string"
+            },
+            {
+              "id": "3974e90e-d42e-4458-903c-e5edbc84c063",
+              "name": "data",
+              "value": "{   \"externalId\": \"auth0|xyz123\",   \"name\": \"John Doe\" }",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -60,
+        -220
+      ],
+      "id": "d027d65e-208f-4fdd-9d3d-6020901bcbd0",
+      "name": "example_post"
+    },
+    {
+      "parameters": {
+        "method": "={{ $json.method }}",
+        "url": "={{ $json.endpoint }}/{{ $json.path }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json.data }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        560,
+        20
+      ],
+      "id": "bb283722-83a3-4fa4-8e40-d5c3dc12e1d0",
+      "name": "other_request"
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "path"
+            },
+            {
+              "name": "method"
+            },
+            {
+              "name": "data"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -240,
+        0
+      ],
+      "id": "11d97e19-e71d-418f-b30a-241463395980",
+      "name": "When Executed by Another Workflow"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "example_post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "global": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "get_request",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "other_request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "example_get": {
+      "main": [
+        []
+      ]
+    },
+    "example_post": {
+      "main": [
+        [
+          {
+            "node": "global",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "global",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "1d7ba482-1af2-4034-8504-5d7253d495d8",
+  "meta": {
+    "instanceId": "ce43f8e9d83fa55957f8a418a0867c61676143d6fb4473fe26538c46ef0042bd"
+  },
+  "id": "rmli9qpDoZXkvYAg",
+  "tags": [
+    {
+      "createdAt": "2025-04-10T13:14:52.178Z",
+      "updatedAt": "2025-04-10T13:14:52.178Z",
+      "id": "HC51OalwgX4DEzEL",
+      "name": "memorizou"
+    }
+  ]
+}

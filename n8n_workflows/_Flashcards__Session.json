@@ -1,0 +1,211 @@
+{
+  "name": "[Flashcards] Session",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -260,
+        -240
+      ],
+      "id": "320c9a27-51a6-4fe6-b5f2-db21bdbfa184",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "content": "### Session\nLoads the session",
+        "height": 520,
+        "width": 900,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -300,
+        -340
+      ],
+      "typeVersion": 1,
+      "id": "83e37f9b-6005-4f96-bdcb-1b9825444f88",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "userId"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -260,
+        -20
+      ],
+      "id": "e40f016e-3f8a-43a7-8e3a-9e3c2efebbed",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e0164610-7ddf-4c0b-9e0f-d437ead674a1",
+              "name": "user_id",
+              "value": "1",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -80,
+        -240
+      ],
+      "id": "88ad9069-e87a-4bfb-ae3f-98b9b1cc5d8c",
+      "name": "example"
+    },
+    {
+      "parameters": {
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        120,
+        -100
+      ],
+      "id": "16733dc0-11a7-4ae5-9038-0780d420bc1f",
+      "name": "variables"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "rmli9qpDoZXkvYAg",
+          "mode": "list",
+          "cachedResultName": "[Flashcards] Request"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "path": "sessions",
+            "method": "POST",
+            "data": "={\n  \"userId\": \"{{ $json.user_id }}\"\n}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "path",
+              "displayName": "path",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "method",
+              "displayName": "method",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "data",
+              "displayName": "data",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        360,
+        -100
+      ],
+      "id": "6ab41ffd-e2b8-4dd7-9b9a-daf006e0c72b",
+      "name": "create_session"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "example",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "variables",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "example": {
+      "main": [
+        [
+          {
+            "node": "variables",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "variables": {
+      "main": [
+        [
+          {
+            "node": "create_session",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "e0e281e9-0cf8-4d37-8f97-be1cd9d41400",
+  "meta": {
+    "instanceId": "ce43f8e9d83fa55957f8a418a0867c61676143d6fb4473fe26538c46ef0042bd"
+  },
+  "id": "RHDVaT2OCnLbnUYD",
+  "tags": [
+    {
+      "createdAt": "2025-04-10T13:14:52.178Z",
+      "updatedAt": "2025-04-10T13:14:52.178Z",
+      "id": "HC51OalwgX4DEzEL",
+      "name": "memorizou"
+    }
+  ]
+}

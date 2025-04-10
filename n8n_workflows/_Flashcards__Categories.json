@@ -1,0 +1,443 @@
+{
+  "name": "[Flashcards] Categories",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -240,
+        -220
+      ],
+      "id": "d1d32f37-f88d-426d-a6f6-1b41ebe5301d",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "content": "### Categories\nCRUD actions for categories",
+        "height": 560,
+        "width": 1360,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -300,
+        -340
+      ],
+      "typeVersion": 1,
+      "id": "a9217c7e-905b-46fe-be8c-a6a46f14bbaa",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "name"
+            },
+            {
+              "name": "description"
+            },
+            {
+              "name": "action"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -240,
+        0
+      ],
+      "id": "0e5ccd4a-8b96-4323-8fb2-a1b080741d12",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.action }}",
+                    "rightValue": "create",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "e2b6f61c-31a3-495d-bd38-f12af5afb4c8"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "a0d4a895-9bae-4177-8595-e7204e025de3",
+                    "leftValue": "={{ $json.action }}",
+                    "rightValue": "recover",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        140,
+        -120
+      ],
+      "id": "805632cc-94b7-4620-b30c-b573ae5f349c",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "rmli9qpDoZXkvYAg",
+          "mode": "list",
+          "cachedResultName": "[Flashcards] Request"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "path": "categories",
+            "method": "POST",
+            "data": "={\n  \"name\": \"{{ $json.name }}\",\n  \"description\": \"{{ $json.description }}\"\n}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "path",
+              "displayName": "path",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "method",
+              "displayName": "method",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "data",
+              "displayName": "data",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        400,
+        -260
+      ],
+      "id": "1b3d7674-5c58-45e4-9c1e-07a3f489b9ea",
+      "name": "create_categories"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e0164610-7ddf-4c0b-9e0f-d437ead674a1",
+              "name": "name",
+              "value": "Marcelo2",
+              "type": "string"
+            },
+            {
+              "id": "b014e77f-27bb-4895-9245-5e42412ab288",
+              "name": "description",
+              "value": "description",
+              "type": "string"
+            },
+            {
+              "id": "634e548f-9f81-4173-894a-a606f2b2411f",
+              "name": "action",
+              "value": "recover",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -40,
+        -220
+      ],
+      "id": "f14cccc8-24ef-41c0-9bb6-744d07cc5949",
+      "name": "example"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "rmli9qpDoZXkvYAg",
+          "mode": "list",
+          "cachedResultName": "[Flashcards] Request"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "path": "=categories?name={{ $json.name }}",
+            "method": "GET"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "path",
+              "displayName": "path",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "method",
+              "displayName": "method",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "data",
+              "displayName": "data",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        400,
+        -60
+      ],
+      "id": "09a39966-f903-4501-b081-b0d603e52334",
+      "name": "get_categories",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "1a193b9f-28ac-42f6-ae4d-23dbafa5fa08",
+              "leftValue": "={{ Object.keys($json).length }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        640,
+        -60
+      ],
+      "id": "3f547862-9c05-4adc-bfa5-f8dbaae32b91",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "jsCode": "return $(\"Switch\").all()"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        880,
+        20
+      ],
+      "id": "28db71a0-0a8d-4ce5-a7b8-f8581e1e9c47",
+      "name": "prepare_to_create"
+    },
+    {
+      "parameters": {
+        "jsCode": "return $input.first();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        880,
+        -120
+      ],
+      "id": "4421b1ca-7e12-40a3-b20e-77a109958d4b",
+      "name": "Code"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "example",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "create_categories",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "get_categories",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "example": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_categories": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "prepare_to_create",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "prepare_to_create": {
+      "main": [
+        [
+          {
+            "node": "create_categories",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "4cabc021-165f-46ba-956e-73aef6a4afa6",
+  "meta": {
+    "instanceId": "ce43f8e9d83fa55957f8a418a0867c61676143d6fb4473fe26538c46ef0042bd"
+  },
+  "id": "g0asSBhFIibjQeNx",
+  "tags": [
+    {
+      "createdAt": "2025-04-10T13:14:52.178Z",
+      "updatedAt": "2025-04-10T13:14:52.178Z",
+      "id": "HC51OalwgX4DEzEL",
+      "name": "memorizou"
+    }
+  ]
+}

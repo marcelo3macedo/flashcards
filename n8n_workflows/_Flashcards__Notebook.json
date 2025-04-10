@@ -1,0 +1,443 @@
+{
+  "name": "[Flashcards] Notebook",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -260,
+        -240
+      ],
+      "id": "32f843af-e166-4dbc-b4c7-b90249726a3a",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "content": "### Notebooks\nCRUD actions for notebooks",
+        "height": 640,
+        "width": 1320,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -300,
+        -340
+      ],
+      "typeVersion": 1,
+      "id": "259d5718-6167-4043-a7d4-9a46e1088ec7",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "title"
+            },
+            {
+              "name": "description"
+            },
+            {
+              "name": "category"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -260,
+        -20
+      ],
+      "id": "cf720474-e642-4d03-bc80-49b4609792ca",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e0164610-7ddf-4c0b-9e0f-d437ead674a1",
+              "name": "title",
+              "value": "Marcelo22",
+              "type": "string"
+            },
+            {
+              "id": "b014e77f-27bb-4895-9245-5e42412ab288",
+              "name": "description",
+              "value": "description",
+              "type": "string"
+            },
+            {
+              "id": "634e548f-9f81-4173-894a-a606f2b2411f",
+              "name": "categoryName",
+              "value": "Marcelo",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -80,
+        -240
+      ],
+      "id": "46281bd2-ca67-4840-a3fd-4477a95e0cba",
+      "name": "example"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "1a193b9f-28ac-42f6-ae4d-23dbafa5fa08",
+              "leftValue": "={{ Object.keys($json).length }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        800,
+        -100
+      ],
+      "id": "b47d02a9-642a-4087-b912-d0f180f4b1c1",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "jsCode": "return $(\"variables\").all()"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        120,
+        120
+      ],
+      "id": "69a04795-3f68-4e96-955a-517fc9bfc703",
+      "name": "prepare_to_create"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "rmli9qpDoZXkvYAg",
+          "mode": "list",
+          "cachedResultName": "[Flashcards] Request"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "path": "=notebooks?title={{ $('variables').item.json.title }}",
+            "method": "GET"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "path",
+              "displayName": "path",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "method",
+              "displayName": "method",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "data",
+              "displayName": "data",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        580,
+        -100
+      ],
+      "id": "4f19f506-87d2-4cd9-a329-ff24465e0522",
+      "name": "get_notebooks",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        120,
+        -100
+      ],
+      "id": "b137110e-e58e-4586-a40b-70508f80b9a9",
+      "name": "variables"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "rmli9qpDoZXkvYAg",
+          "mode": "list",
+          "cachedResultName": "[Flashcards] Request"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "path": "notebooks",
+            "method": "POST",
+            "data": "={\n  \"title\": \"{{ $json.title }}\",\n  \"description\": \"{{ $json.description }}\",\n  \"categoryId\": \"{{ $('get_category').item.json.id }}\"\n}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "path",
+              "displayName": "path",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "method",
+              "displayName": "method",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "data",
+              "displayName": "data",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        340,
+        120
+      ],
+      "id": "0c64c46b-facf-4c11-8e35-1e2aaae2c8a7",
+      "name": "create_notebooks"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "g0asSBhFIibjQeNx",
+          "mode": "list",
+          "cachedResultName": "[Flashcards] Categories"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "action": "recover",
+            "name": "Marcelo",
+            "description": "Marcelo"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "description",
+              "displayName": "description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "action",
+              "displayName": "action",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        340,
+        -100
+      ],
+      "id": "1e79b702-c7c4-4b59-885e-acd0e4d68651",
+      "name": "get_category",
+      "alwaysOutputData": true
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "example",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "variables",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "example": {
+      "main": [
+        [
+          {
+            "node": "variables",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [],
+        [
+          {
+            "node": "prepare_to_create",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "prepare_to_create": {
+      "main": [
+        [
+          {
+            "node": "create_notebooks",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_notebooks": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "variables": {
+      "main": [
+        [
+          {
+            "node": "get_category",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_category": {
+      "main": [
+        [
+          {
+            "node": "get_notebooks",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "d15fcfd7-d3f9-42f3-8ff2-66c6666c5dfc",
+  "meta": {
+    "instanceId": "ce43f8e9d83fa55957f8a418a0867c61676143d6fb4473fe26538c46ef0042bd"
+  },
+  "id": "F4D2Am1z9CQPsCkr",
+  "tags": [
+    {
+      "createdAt": "2025-04-10T13:14:52.178Z",
+      "updatedAt": "2025-04-10T13:14:52.178Z",
+      "id": "HC51OalwgX4DEzEL",
+      "name": "memorizou"
+    }
+  ]
+}
