@@ -22,7 +22,7 @@ export const sessionService = {
       }
     }
 
-    const cardsCreated = await sessionRepo.getCardsBySessionId(hasSession.id);
+    const cardsCreated = await sessionRepo.getCardsBySessionId(sessionId);
     return { sessionId, cards: cardsCreated };
   },
 
