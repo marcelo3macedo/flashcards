@@ -2,29 +2,28 @@ version: '3.9'
 
 services:
   app:
-    build: .
+    build:
+      context: .
+      target: dev
     container_name: flashcards-app
     ports:
       - '3000:3000'
-    environment:
-      - NODE_ENV=production
-      - DATABASE_URL=mysql://user:password@db:3306/flashcards
-    depends_on:
-      - db
-
-  db:
-    image: mysql:8.4
-    container_name: flashcards-db
-    restart: always
-    environment:
-      MYSQL_DATABASE: flashcards
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
-      MYSQL_ROOT_PASSWORD: rootpass
     volumes:
-      - mysql-data:/var/lib/mysql
-    ports:
-      - '3306:3306'
+      - .:/app
+      - /app/node_modules # avoid node_modules conflicts
+    environment:
+      - NODE_ENV=development
+      - MYSQL_HOST=mysql_container
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=root
+      - MYSQL_DATABASE=concursoPublico
+      - MYSQL_PORT=3306
+    networks:
+      - shared_network
 
 volumes:
   mysql-data:
+
+networks:
+  shared_network:
+    external: true

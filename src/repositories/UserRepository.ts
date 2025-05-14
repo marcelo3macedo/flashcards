@@ -31,9 +31,10 @@ export class UserRepository extends BaseRepository<User> {
   }
 
   async update(id: number, data: Partial<User>): Promise<boolean> {
+    const exists = await this.findById(id);
     const [result] = await this.pool.query<ResultSetHeader>(
-      'UPDATE users SET name = ?, updated_at = NOW() WHERE id = ?',
-      [data.name || null, id],
+      'UPDATE users SET name = ?, state = ?, updated_at = NOW() WHERE id = ?',
+      [data.name || exists?.name, data.state || null, id],
     );
     return result.affectedRows > 0;
   }

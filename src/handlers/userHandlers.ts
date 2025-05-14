@@ -2,10 +2,13 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { userService } from '../services/UserService';
 
 export async function handleGetUsers(req: NextApiRequest, res: NextApiResponse) {
-  const { name } = req.query;
+  const { name, externalId } = req.query;
 
   try {
-    if (typeof name === 'string') {
+    if (typeof externalId === 'string') {
+      const users = await userService.findByExternalId(externalId);
+      return res.status(200).json(users);
+    } else if (typeof name === 'string') {
       const users = await userService.findByName(name);
       return res.status(200).json(users);
     } else {

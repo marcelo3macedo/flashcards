@@ -22,7 +22,8 @@ export const sessionService = {
       }
     }
 
-    return { sessionId, cards };
+    const cardsCreated = await sessionRepo.getCardsBySessionId(hasSession.id);
+    return { sessionId, cards: cardsCreated };
   },
 
   async finishSession(
