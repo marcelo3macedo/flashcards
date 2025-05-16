@@ -7,4 +7,5 @@ const themeRepo = new ThemeRepository(pool);
 export const themeService = {
   getAll: () => themeRepo.findAll(),
   create: (data: Partial<Theme>) => themeRepo.create(data),
+  findByGroup: (group: string) => themeRepo.findByGroup(group),
 };

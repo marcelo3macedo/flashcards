@@ -3,6 +3,12 @@ import { themeService } from '@/services/ThemeService';
 
 export async function handleGetTheme(req: NextApiRequest, res: NextApiResponse) {
   try {
+    const { group } = req.query;
+    if (typeof group === 'string') {
+      const themes = await themeService.findByGroup(group);
+      return res.status(200).json(themes);
+    }
+
     const themes = await themeService.getAll();
     return res.status(200).json(themes);
   } catch (err) {
@@ -12,10 +18,10 @@ export async function handleGetTheme(req: NextApiRequest, res: NextApiResponse) 
 }
 
 export async function handleCreateTheme(req: NextApiRequest, res: NextApiResponse) {
-  const { description } = req.body;
+  const { description, group } = req.body;
 
   try {
-    const id = await themeService.create({ description });
+    const id = await themeService.create({ description, group });
     return res.status(201).json({ id });
   } catch (err) {
     console.error('Failed to create theme:', err);

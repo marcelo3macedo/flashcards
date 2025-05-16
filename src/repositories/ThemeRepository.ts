@@ -17,10 +17,18 @@ export class ThemeRepository extends BaseRepository<Theme> {
     return rows as Theme[];
   }
 
+  async findByGroup(group: string) {
+    const [result] = await this.pool.query(
+      `SELECT * FROM themes WHERE group LIKE CONCAT('%', ?, '%')`,
+      [group],
+    );
+    return result;
+  }
+
   async create(data: Partial<Theme>): Promise<number> {
     const [result] = await this.pool.query<ResultSetHeader>(
-      'INSERT INTO themes (description, created_at, updated_at) VALUES (?, NOW(), NOW())',
-      [data.description || null],
+      'INSERT INTO themes (description, group, created_at, updated_at) VALUES (?, ?, NOW(), NOW())',
+      [data.description || null, data.group || null],
     );
     return result.insertId;
   }
